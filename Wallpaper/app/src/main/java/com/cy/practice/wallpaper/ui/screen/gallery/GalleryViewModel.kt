@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.cy.practice.wallpaper.data.remote.dto.PixabayPhoto
 import com.cy.practice.wallpaper.domain.repository.PhotoRepository
 import com.cy.practice.wallpaper.shared.ApiResult
+import com.cy.practice.wallpaper.shared.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,11 +27,11 @@ class GalleryViewModel @Inject constructor(
         loadData()
     }
 
-    fun loadData() {
+    fun loadData(query: String = Constants.TOPICS.random()) {
         _isLoading.value = true
         viewModelScope.launch {
             delay(1000)
-            val result = wallpaperRepository.getPagedPhotos()
+            val result = wallpaperRepository.getPagedPhotos(query)
             _isLoading.value = false
             if (result is ApiResult.Success) {
                 _photos.value = result.data
