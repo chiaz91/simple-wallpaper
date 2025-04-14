@@ -41,7 +41,7 @@ fun PagedPhotoGrid(
     onCLick: (PixabayPhoto) -> Unit,
     modifier: Modifier = Modifier,
     state: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
-    //contentPadding: PaddingValues = WindowInsets.statusBars.asPaddingValues()
+    contentPadding: PaddingValues = WindowInsets.statusBars.asPaddingValues()
 ) {
 
     val cellConfiguration = if (LocalConfiguration.current.orientation == ORIENTATION_PORTRAIT) {
@@ -52,7 +52,7 @@ fun PagedPhotoGrid(
         modifier = modifier,
         state = state,
         columns = cellConfiguration,
-        //contentPadding = contentPadding,
+        contentPadding = contentPadding,
         verticalItemSpacing = 8.dp,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {

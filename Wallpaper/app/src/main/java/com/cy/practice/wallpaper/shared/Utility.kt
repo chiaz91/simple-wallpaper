@@ -16,10 +16,14 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -85,6 +89,20 @@ fun onDebounceClick(
         }
     }
 }
+
+@Composable
+fun rememberVisibilityBasedOnScroll(lazyGridState: LazyStaggeredGridState): State<Boolean> {
+    var previousFirstIndex by remember { mutableIntStateOf(0) }
+    return remember {
+        derivedStateOf {
+            val currentFirstIndex = lazyGridState.firstVisibleItemIndex
+            val isScrollingUp = currentFirstIndex < previousFirstIndex
+            previousFirstIndex = currentFirstIndex
+            isScrollingUp || lazyGridState.firstVisibleItemIndex == 0
+        }
+    }
+}
+
 
 
 
