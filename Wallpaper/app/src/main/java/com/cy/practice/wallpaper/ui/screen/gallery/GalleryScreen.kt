@@ -1,5 +1,6 @@
 package com.cy.practice.wallpaper.ui.screen.gallery
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,12 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.cy.practice.wallpaper.data.remote.dto.PixabayPhoto
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryScreen(
     modifier: Modifier = Modifier,
+    onClickPhoto: (PixabayPhoto) -> Unit,
     vm: GalleryViewModel = hiltViewModel()
 ) {
     val pagingPhotos = vm.pagingPhotos.collectAsLazyPagingItems()
@@ -40,7 +43,7 @@ fun GalleryScreen(
             items(pagingPhotos.itemCount) { index ->
                 val photo = pagingPhotos[index]
                 photo?.let {
-                    PhotoCard(photo)
+                    PhotoCard(photo, modifier = Modifier.clickable { onClickPhoto(photo) })
                 }
             }
 
