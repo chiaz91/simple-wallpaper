@@ -20,4 +20,7 @@ data class PixabayPhoto(
     @SerialName("largeImageURL") val largeImageUrl: String,
     val imageWidth: Int,
     val imageHeight: Int,
-)
+) {
+    fun calAspectRation() = imageWidth.toFloat() / imageHeight.toFloat()
+}
+

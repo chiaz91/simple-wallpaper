@@ -1,4 +1,4 @@
-package com.cy.practice.wallpaper.ui.screen.gallery
+package com.cy.practice.wallpaper.ui.screen.gallery.component
 
 
 import androidx.compose.foundation.Image
@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.cy.practice.wallpaper.data.remote.dto.PixabayPhoto
+import com.cy.practice.wallpaper.shared.conditional
 import com.cy.practice.wallpaper.shared.shimmerEffect
 
 
@@ -36,7 +38,7 @@ fun PhotoCard(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1f)
+            .aspectRatio(photo.calAspectRation())
             .then(modifier),
     ) {
         Box(
@@ -46,12 +48,16 @@ fun PhotoCard(
             Image(
                 painter = painter,
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
-                    .shimmerEffect()
+                    .conditional(painter.state is AsyncImagePainter.State.Loading){
+                        shimmerEffect()
+                    }
+
             )
         }
     }
 }
+
 

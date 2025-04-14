@@ -1,4 +1,4 @@
-package com.cy.practice.wallpaper.ui.screen.gallery
+package com.cy.practice.wallpaper.ui.screen.gallery.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
