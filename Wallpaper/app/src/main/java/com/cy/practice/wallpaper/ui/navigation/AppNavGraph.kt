@@ -32,6 +32,7 @@ fun AppNavGraph(
                 onClickPhoto = { photo ->
                     navController.navigate(Routes.PhotoDetail(photo))
                 },
+                onSearch = {galleryViewModel.query(it)},
                 modifier = modifier
             )
         }
