@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
+import com.cy.practice.wallpaper.ui.screen.gallery.GalleryScreen
 import com.cy.practice.wallpaper.ui.theme.WallpaperTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +18,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WallpaperTheme {
-                Text("Hello World")
+                Scaffold { innerPadding ->
+                    GalleryScreen(modifier = Modifier.padding(innerPadding))
+                }
             }
         }
     }
