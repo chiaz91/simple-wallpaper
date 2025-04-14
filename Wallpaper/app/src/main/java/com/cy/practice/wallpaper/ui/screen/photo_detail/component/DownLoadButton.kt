@@ -69,7 +69,7 @@ fun DownLoadButton(
         ) {
             val progress = (state as? Progress)?.progress ?: 0
             LinearProgressIndicator(
-                progress = { progress / 100f },
+//                progress = { progress / 100f },
             )
         }
     }
