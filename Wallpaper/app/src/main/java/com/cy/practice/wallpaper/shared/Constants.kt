@@ -1,6 +1,7 @@
 package com.cy.practice.wallpaper.shared
 
 object Constants {
+    const val NETWORK_PAGE_SIZE = 20
     val TOPICS = arrayOf(
         "abstract",
         "adventure",

@@ -1,8 +1,9 @@
 package com.cy.practice.wallpaper.domain.repository
 
+import androidx.paging.PagingData
 import com.cy.practice.wallpaper.data.remote.dto.PixabayPhoto
-import com.cy.practice.wallpaper.shared.ApiResult
+import kotlinx.coroutines.flow.Flow
 
 interface PhotoRepository {
-    suspend fun getPagedPhotos(query: String? = null): ApiResult<List<PixabayPhoto>, String>
+    fun getPagedPhotos(query: String? = null): Flow<PagingData<PixabayPhoto>>
 }
