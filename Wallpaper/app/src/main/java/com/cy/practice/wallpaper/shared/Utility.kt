@@ -1,6 +1,11 @@
 package com.cy.practice.wallpaper.shared
 
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.webkit.MimeTypeMap
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -33,6 +38,35 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 
 
+fun Context.viewImage(uri: Uri) {
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType(uri, "image/*")
+        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+
+    try {
+        startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+    }
+}
+
+fun getMimeFromFileName(fileName: String?): String? {
+    val map = MimeTypeMap.getSingleton()
+    val ext = MimeTypeMap.getFileExtensionFromUrl(fileName)
+    return map.getMimeTypeFromExtension(ext)
+}
+
+fun generateFileNameFromUrl(url: String, fallbackExtension: String = "jpg"): String {
+    // Try to extract filename from path
+    val lastSegment = url.substring(url.lastIndexOf('/') + 1) // Uri.parse(url).lastPathSegment
+    return if (lastSegment.isNotBlank() && lastSegment.contains('.')) {
+        lastSegment
+    } else {
+        // Fallback: timestamp-based name
+        "download_${System.currentTimeMillis()}.$fallbackExtension"
+    }
+}
 
 
 // compose util

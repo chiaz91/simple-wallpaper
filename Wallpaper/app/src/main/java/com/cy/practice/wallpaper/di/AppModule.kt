@@ -1,12 +1,16 @@
 package com.cy.practice.wallpaper.di
 
+import android.content.Context
 import com.cy.practice.wallpaper.data.remote.PixabayApi
 import com.cy.practice.wallpaper.data.remote.PixabayApiImpl
+import com.cy.practice.wallpaper.data.repository.AndroidDownloader
 import com.cy.practice.wallpaper.data.repository.PhotoRepositoryImpl
+import com.cy.practice.wallpaper.domain.repository.Downloader
 import com.cy.practice.wallpaper.domain.repository.PhotoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -69,5 +73,13 @@ class AppModule {
         pixabayApi: PixabayApi
     ): PhotoRepository {
         return PhotoRepositoryImpl(pixabayApi)
+    }
+
+    @Provides
+    @Singleton
+    fun providesAndroidDownloader(
+        @ApplicationContext context: Context,
+    ): Downloader {
+        return AndroidDownloader(context)
     }
 }
