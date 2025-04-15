@@ -18,6 +18,7 @@ class WallpaperApplication : Application(), ImageLoaderFactory {
         }
     }
 
+    // Coil: configuring the singleton ImageLoader
     override fun newImageLoader(): ImageLoader {
         return ImageLoader(this).newBuilder()
 //            .memoryCachePolicy(CachePolicy.ENABLED)
@@ -34,8 +35,6 @@ class WallpaperApplication : Application(), ImageLoaderFactory {
 //                    .directory(cacheDir)
 //                    .build()
 //            }
-//            .memoryCachePolicy(CachePolicy.DISABLED)
-//            .diskCachePolicy(CachePolicy.DISABLED)
             .logger(DebugLogger(Log.INFO))
             .build()
     }

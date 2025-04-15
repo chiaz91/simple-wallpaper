@@ -16,10 +16,11 @@ sealed interface Routes {
 
     @Serializable
     data class PhotoDetail(
-        // not recommended to pass complex object
+        // simplify for practice, do not recommended to pass complex object in navigation
         val photo: PixabayPhoto
     ) : Routes {
         companion object {
+            // serialize the custom object as json
             val typeMap = mapOf(typeOf<PixabayPhoto>() to serializableType<PixabayPhoto>())
 
             fun from(savedStateHandle: SavedStateHandle) =
@@ -28,7 +29,7 @@ sealed interface Routes {
     }
 }
 
-
+// helper method to create NavType for custom object used in navigation
 inline fun <reified T : Any> serializableType(
     isNullableAllowed: Boolean = false,
     json: Json = Json,

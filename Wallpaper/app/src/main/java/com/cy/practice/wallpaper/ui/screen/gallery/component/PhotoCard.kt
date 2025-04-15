@@ -51,7 +51,7 @@ fun PhotoCard(
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
-                    .conditional(painter.state is AsyncImagePainter.State.Loading){
+                    .conditional(painter.state is AsyncImagePainter.State.Loading) {
                         shimmerEffect()
                     }
 

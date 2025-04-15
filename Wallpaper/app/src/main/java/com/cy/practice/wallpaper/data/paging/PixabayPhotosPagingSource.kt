@@ -33,7 +33,9 @@ class PixabayPhotosPagingSource(
         return try {
             val response = service.getPhotos(page, loadSize, query)
             if (response is ApiResult.Success) {
-                Timber.d(response.toString())
+                // response.totalHits indicates the total number of results matching the query. We
+                // can use it to calculate the total number of pages or items before or after the
+                // current page.
                 val photos = response.data.hits
                 val itemBefore = (page - 1) * NETWORK_PAGE_SIZE
                 val itemAfter = response.data.totalHits - itemBefore - photos.size
@@ -46,8 +48,8 @@ class PixabayPhotosPagingSource(
                     nextKey = if (itemAfter == 0 || photos.isEmpty()) {
                         null
                     } else {
-                        // when LoadParams is LoadParams.Refresh,  loadSize = initialLoadSize (3 times of page size by default)
-                        // hence, need to calculate proper nextKey to prevent duplicate data loaded
+                        // For LoadParams.Refresh, loadSize = initialLoadSize (3x page size).
+                        // Calculate nextKey carefully to avoid duplicate loads.
                         page + loadSize / NETWORK_PAGE_SIZE
                     }
                 ).also {

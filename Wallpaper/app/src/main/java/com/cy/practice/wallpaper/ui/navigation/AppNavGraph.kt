@@ -38,8 +38,10 @@ fun AppNavGraph(
         }
 
         composable<Routes.PhotoDetail>(
+            // provide typeMap to tell how to serialize custom object
             typeMap = Routes.PhotoDetail.typeMap
         ) { backStackEntry ->
+            // retrieve custom object from route
             val route: Routes.PhotoDetail = backStackEntry.toRoute()
             PhotoDetailScreen(
                 route.photo,

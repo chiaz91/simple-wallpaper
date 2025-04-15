@@ -99,8 +99,7 @@ fun PhotoSearchBar(
         windowInsets = WindowInsets.systemBars,
         modifier = Modifier
             .conditional(!expanded) {
-                // seems padding will also apply to expended state, breaking immerse experience
-                // hence only apply modifier conditional
+                //Padding affects expanded state, breaking immersion — apply modifier conditionally.
                 modifier
             }
     ) {

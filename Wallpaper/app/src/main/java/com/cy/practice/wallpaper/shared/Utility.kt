@@ -104,8 +104,6 @@ fun rememberVisibilityBasedOnScroll(lazyGridState: LazyStaggeredGridState): Stat
 }
 
 
-
-
 fun LazyStaggeredGridScope.pagingLoadStateItem(
     loadState: LoadState,
     keySuffix: String? = null,
@@ -240,9 +238,6 @@ fun calculateDoubleTapOffset(
         newOffset.y.coerceIn(0f, (size.height / zoom) * (zoom - 1f))
     )
 }
-
-
-
 
 
 // paging helper

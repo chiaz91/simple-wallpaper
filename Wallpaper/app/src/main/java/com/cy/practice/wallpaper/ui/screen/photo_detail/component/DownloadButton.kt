@@ -24,7 +24,7 @@ import com.cy.practice.wallpaper.shared.onDebounceClick
 
 
 @Composable
-fun DownLoadButton(
+fun DownloadButton(
     state: DownloadState?,
     onDownLoad: () -> Unit,
     modifier: Modifier = Modifier,

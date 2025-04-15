@@ -1,6 +1,5 @@
 package com.cy.practice.wallpaper.ui.screen.photo_detail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,14 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cy.practice.wallpaper.data.remote.dto.PixabayPhoto
 import com.cy.practice.wallpaper.domain.model.DownloadState
 import com.cy.practice.wallpaper.shared.viewImage
-import com.cy.practice.wallpaper.ui.screen.photo_detail.component.DownLoadButton
+import com.cy.practice.wallpaper.ui.screen.photo_detail.component.DownloadButton
 import com.cy.practice.wallpaper.ui.screen.photo_detail.component.ZoomableImage
 
 
@@ -76,7 +74,7 @@ fun PhotoDetailScreen(
             Icon(Icons.Default.Close, "dismiss button")
         }
 
-        DownLoadButton(
+        DownloadButton(
             downloadState,
             onDownLoad = onDownLoad,
             modifier = Modifier.align(Alignment.TopEnd)
