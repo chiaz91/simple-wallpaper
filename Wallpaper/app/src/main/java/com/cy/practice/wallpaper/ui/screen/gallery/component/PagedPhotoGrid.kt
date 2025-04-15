@@ -46,7 +46,7 @@ fun PagedPhotoGrid(
 
     val cellConfiguration = if (LocalConfiguration.current.orientation == ORIENTATION_PORTRAIT) {
         StaggeredGridCells.Fixed(2)
-    } else StaggeredGridCells.Adaptive(250.dp)
+    } else StaggeredGridCells.Adaptive(180.dp)
 
     LazyVerticalStaggeredGrid(
         modifier = modifier,

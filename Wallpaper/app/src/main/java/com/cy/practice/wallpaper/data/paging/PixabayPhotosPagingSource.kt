@@ -6,6 +6,7 @@ import com.cy.practice.wallpaper.data.remote.PixabayApi
 import com.cy.practice.wallpaper.data.remote.dto.PixabayPhoto
 import com.cy.practice.wallpaper.shared.ApiResult
 import com.cy.practice.wallpaper.shared.Constants.NETWORK_PAGE_SIZE
+import timber.log.Timber
 
 private const val STARTING_PAGE_INDEX = 1
 
@@ -31,16 +32,27 @@ class PixabayPhotosPagingSource(
 
         return try {
             val response = service.getPhotos(page, loadSize, query)
-
             if (response is ApiResult.Success) {
+                Timber.d(response.toString())
+                val photos = response.data.hits
+                val itemBefore = (page - 1) * NETWORK_PAGE_SIZE
+                val itemAfter = response.data.totalHits - itemBefore - photos.size
+
                 LoadResult.Page(
                     itemsBefore = (page - 1) * NETWORK_PAGE_SIZE,
-                    data = response.data,
+                    itemsAfter = itemAfter,
+                    data = photos,
                     prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
-                    // when LoadParams is LoadParams.Refresh,  loadSize = initialLoadSize (3 times of page size by default)
-                    // hence, need to calculate proper nextKey to prevent duplicate data loaded
-                    nextKey = if (response.data.isEmpty()) null else page + loadSize / NETWORK_PAGE_SIZE
-                )
+                    nextKey = if (itemAfter == 0 || photos.isEmpty()) {
+                        null
+                    } else {
+                        // when LoadParams is LoadParams.Refresh,  loadSize = initialLoadSize (3 times of page size by default)
+                        // hence, need to calculate proper nextKey to prevent duplicate data loaded
+                        page + loadSize / NETWORK_PAGE_SIZE
+                    }
+                ).also {
+                    Timber.d("Result.Page::Curr(key=$page, items=${photos.size}), Prev(key=${it.prevKey}, itemsBefore=${it.itemsBefore}), Next(key=${it.nextKey}, itemsAfter=${it.itemsAfter})")
+                }
             } else {
                 val errorMessage = (response as? ApiResult.Error)?.error ?: "no response"
                 LoadResult.Error(Exception(errorMessage))

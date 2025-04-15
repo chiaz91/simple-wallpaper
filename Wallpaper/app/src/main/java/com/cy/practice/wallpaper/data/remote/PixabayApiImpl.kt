@@ -1,7 +1,6 @@
 package com.cy.practice.wallpaper.data.remote
 
 import com.cy.practice.wallpaper.BuildConfig
-import com.cy.practice.wallpaper.data.remote.dto.PixabayPhoto
 import com.cy.practice.wallpaper.data.remote.dto.PixabayPhotosResponse
 import com.cy.practice.wallpaper.shared.ApiResult
 import io.ktor.client.HttpClient
@@ -26,7 +25,7 @@ class PixabayApiImpl(
         page: Int,
         pageSize: Int,
         query: String?,
-    ): ApiResult<List<PixabayPhoto>, String> {
+    ): ApiResult<PixabayPhotosResponse, String> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = client.get(BASE_URL) {
@@ -41,7 +40,7 @@ class PixabayApiImpl(
 
                 if (response.status == HttpStatusCode.OK) {
                     val result = response.body<PixabayPhotosResponse>()
-                    ApiResult.Success(result.hits)
+                    ApiResult.Success(result)
                 } else {
                     ApiResult.Error("Error: ${response.status.description}")
                 }

@@ -19,7 +19,6 @@ class PhotoRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
-                prefetchDistance = 1,
                 enablePlaceholders = false,
             ),
             pagingSourceFactory = { PixabayPhotosPagingSource(query, service) }
